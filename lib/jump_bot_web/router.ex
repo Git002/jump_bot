@@ -20,10 +20,11 @@ defmodule JumpBotWeb.Router do
     get "/", PageController, :home
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", JumpBotWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", JumpBotWeb do
+    pipe_through :api
+
+    post "/webhook", WebhookController, :webhook
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:jump_bot, :dev_routes) do

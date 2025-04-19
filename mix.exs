@@ -32,6 +32,8 @@ defmodule JumpBot.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:dotenv, "~> 3.1.0"},
+      {:jose, "~> 1.11"},
       {:phoenix, "~> 1.7.21"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.10"},

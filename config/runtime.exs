@@ -20,6 +20,18 @@ if System.get_env("PHX_SERVER") do
   config :jump_bot, JumpBotWeb.Endpoint, server: true
 end
 
+# Load environment variables from .env file
+Dotenv.load!()
+
+config :jump_bot, JumpBot.Repo,
+  username: System.get_env("DB_USERNAME"),
+  password: System.get_env("DB_PASSWORD"),
+  hostname: System.get_env("DB_HOSTNAME"),
+  database: System.get_env("DB_NAME"),
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||
@@ -49,7 +61,7 @@ if config_env() == :prod do
       """
 
   host = System.get_env("PHX_HOST") || "example.com"
-  port = String.to_integer(System.get_env("PORT") || "4000")
+  port = String.to_integer(System.get_env("PORT") || "8000")
 
   config :jump_bot, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 

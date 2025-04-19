@@ -9,7 +9,7 @@ config :jump_bot, JumpBot.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "jump_bot_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "database#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: System.schedulers_online() * 2
 
@@ -17,7 +17,7 @@ config :jump_bot, JumpBot.Repo,
 # you can enable the server option below.
 config :jump_bot, JumpBotWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "FrjjDlOFytgyGO70V2sEb/i+5vXuBGV/4/L7Mo1HcNnQfXcsQSyJaEphzaDR0+LW",
+  secret_key_base: "secret_test_key",
   server: false
 
 # In test we don't send emails
