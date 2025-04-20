@@ -85,14 +85,14 @@ defmodule JumpBotWeb.WebhookController do
           %{filename => patch || ""}
         end)
 
-      # Fetch AI rules
+      # Fetch AI rules -->
       ai_rules = AiHelpers.get_rules(repo_full_name, access_token)
 
       if map_size(ai_rules) == 0 do
         Logger.info("⚠️ No AI rules found. So not commenting anything...")
         {:ok}
       else
-        # Add AI suggestions as comment
+        # Add AI suggestions as comment -->
         case AiHelpers.generate_ai_response(ai_rules, code_diff) do
           {:ok, ai_text} ->
             case AiHelpers.format_ai_response(ai_text) do

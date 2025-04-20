@@ -55,13 +55,23 @@ defmodule JumpBot.GitHub.AiHelpers do
 
     You should include a suggestion on how the developer can change the code to follow the rule with a fix. If the rule or rule file name is not found then output "No suggestions. Everything is alright!". But if the rule is present, then return fixed code as formatted code with proper indentation and the code output should start with ``` backticks then language name (for example: elixir, python, html, css, js, etc) and then end with ``` at last.
 
-    Now coming to fixed code: if the rules are present then you have to smartly identify code language name. If it is a .md file then let it be backticks with html as the language name. For example:
-    ```html
-    <h1>Hi</h1>
-    <p>This is a .md file</p>
+    Otherwise, if the rules are present and file is not a .txt or .md type then the code output for fixed_code should be the programming language you identify smartly. For example, below code seems to be elixir code so it should be backticks with elixir as the language name. Type file name then in the next line give the fixed code. Example output is as follows assuming that you identified two file diff and rules apply to both so you give fix for each file if neccessary,
+
+    In file `file_name.ex`:
+    ```elixir
+    def func(conn, _params) do
+        IO.inspect("Hello")
     ```
 
-    Otherwise, if the rules are present then the code output for fixed_code should be the language you identify smartly. For example, below code seems to be elixir code so it should be backticks with elixir as the language name. For example:
+    In file `account.ex`:
+    ```elixir
+    def index(conn, _params) do
+        IO.inspect("account code")
+    ```
+
+    Otherwise if there are multiple files and you think rule applies to only one of them then output only one fixed code, like I this:
+
+    In file `file_name.ex`:
     ```elixir
     def func(conn, _params) do
         IO.inspect("Hello")
@@ -103,12 +113,19 @@ defmodule JumpBot.GitHub.AiHelpers do
 
     For fixed code or fixed_code output, return the corrected/suggested code. If rule says don't do something, then you have to modify the code to not do that. If the rule suggest to do something, then modify the code to do exactly that. Return the fixed code according to the understanding of the rule.
 
-    Also, return the test case code with backticks and same programming language name if test case makes sense for that code snippet or function. Otherwise return: "No test case needed". Also, apply multiple rules if present and the give combined suggestions in numbered points in markdown. For example:
-    1. **Reason A**: explaination A
-    2. **Reason B**: explaination B
-    3. **Reason C**: explaination C
+    Also, return the test case code with backticks and same programming language name if test case makes sense for that code snippet or function. Otherwise return: "No test case needed". Also, apply multiple rules if present and the give combined suggestions in bullet points in markdown. Reasoning could be for multiple files as well. For example:
+    - **Overuse of Comments**: In both files index.ex and controller.ex there are lots of unneccessary comments below so I fixed it.
+    - **Complex extractions in clauses**: In both files account.ex, and controller.ex, it makes it hard to know which variables are used for pattern/guards and which ones are not.
 
-    Otherwise, give reasons as paragraph only if single rule is applied only. You can use bold or underline or code markdowns to express.
+    The Reason should be any reason you think is applicable to one or multiple files. Write reason category in bold and then the description and for description you can use simple markdown.
+
+    Do the same for Rules as well. Rule name in bold then for description, simple markdown.
+
+    Give reasons as paragraph only if single rule is applied. Just remember, for multiple files code diff changes, there could be multiple code fixes and multiple reasons (if it matches rules, otherwise say not applicable).
+
+    If there are multiple rules applied then you can mention them in bullet points markdown as well with your own summary, you don't need to output exact rules (but dont give examples on your own, just summarize). You can only use bullet points, code backticks and bold markdown for formatting. For example:
+    - **Title**: Your explaination
+    - **Another Title**: Your explaination
     """
 
     GeminiAPI.call_model(prompt)
