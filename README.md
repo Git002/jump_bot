@@ -11,8 +11,5 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## Learn more
 
-- Official website: https://www.phoenixframework.org/
-- Guides: https://hexdocs.pm/phoenix/overview.html
-- Docs: https://hexdocs.pm/phoenix
+- Official blog: [click here to read](https://dev.to/i_am_abhaysalvi/build-your-own-github-ci-automation-for-code-reviews-using-elixir-and-gemini-3746)
 - Forum: https://elixirforum.com/c/phoenix-forum
-- Source: https://github.com/phoenixframework/phoenix
